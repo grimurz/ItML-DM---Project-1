@@ -7,22 +7,22 @@ made after these treatments. These data are taken from a larger
 dataset, described in  Rousseauw et al, 1983, South African Medical
 Journal. 
 
-sbp		systolic blood pressure
+sbp	-	systolic blood pressure
 
-tobacco		cumulative tobacco (kg)
+tobacco	-	cumulative tobacco (kg)
 
-ldl		low densiity lipoprotein cholesterol
+ldl	-	low densiity lipoprotein cholesterol
 
 adiposity
 
-famhist		family history of heart disease (Present, Absent)
+famhist	-	family history of heart disease (Present, Absent)
 
-typea		type-A behavior
+typea	-	type-A behavior
 
 obesity
 
-alcohol		current alcohol consumption
+alcohol	-	current alcohol consumption
 
-age		age at onset
+age	-	age at onset
 
-chd		response, coronary heart disease
+chd	-	response, coronary heart disease
