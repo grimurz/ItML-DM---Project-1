@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Feb 22 21:54:03 2020
+Created on Sun Feb 23 00:23:47 2020
 
 @author: white
 """
@@ -31,20 +31,33 @@ pca.fit(scaled_data)
 x_pca = pca.transform(scaled_data)
 #We can know feed the x_pca into a classification algorithm
 
-plt.figure(figsize=(8,6))
+plt.figure(figsize=(8,6),dpi=300)
 plt.scatter(x_pca[:,2],x_pca[:,4],c=binary_heart_data.famhist,cmap='plasma')
 plt.title('Family history')
 plt.xlabel('Third principal component')
 plt.ylabel('Fifth Principal Component')
 
-plt.figure(figsize=(8,6))
+plt.figure(figsize=(8,6),dpi=300)
+plt.scatter(x_pca[:,2],x_pca[:,4],c=binary_heart_data.famhist,cmap=sns.cubehelix_palette(start=0,rot=-.2,light=.75,dark=.30, as_cmap=True),alpha=.7,sizes=(10, 70))
+plt.title('Family history')
+plt.xlabel('Third principal component')
+plt.ylabel('Fifth Principal Component')
+
+
+plt.figure(figsize=(8,6),dpi=300)
 plt.scatter(x_pca[:,0],x_pca[:,2],c=binary_heart_data.chd,cmap='plasma')
+plt.title('Coronary heart disease')
+plt.xlabel('First principal component')
+plt.ylabel('Third Principal Component')
+
+plt.figure(figsize=(8,6),dpi=300)
+plt.scatter(x_pca[:,0],x_pca[:,2],c=binary_heart_data.chd,cmap=sns.cubehelix_palette(start=2,rot=-.2,light=.75,dark=.30, as_cmap=True),alpha=.7,sizes=(10, 70))
 plt.title('Coronary heart disease')
 plt.xlabel('First principal component')
 plt.ylabel('Third Principal Component')
 
 
 df_comp = pd.DataFrame(pca.components_,columns=binary_heart_data.columns)
-plt.figure(figsize=(12,6))
+plt.figure(figsize=(12,6),dpi=300)
 sns.heatmap(df_comp,cmap='plasma',)
 plt.show()
