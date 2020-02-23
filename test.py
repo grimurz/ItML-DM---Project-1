@@ -127,6 +127,14 @@ plt.show()
 
 
 
+r = np.arange(1,X.shape[1]+1)
+plt.bar(r, np.std(X,0))
+plt.xticks(r, attributeNames)
+plt.ylabel('Standard deviation')
+plt.xlabel('Attributes')
+plt.title('NanoNose: attribute standard deviations')
+
+
 
 
 # plt.figure(figsize=(8,6),dpi=300)
