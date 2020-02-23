@@ -87,7 +87,7 @@ plt.grid()
 plt.show()
 
 
-attributeNames = list(binary_heart_data.columns)[:-1]
+attributeNames = list(binary_heart_data.columns)
 classNames = ['Beep','Boop'] # Maybe flipped?
 
 # Indices of the principal components to be plotted
