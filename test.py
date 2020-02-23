@@ -40,8 +40,10 @@ from scipy.linalg import svd
 from matplotlib.pyplot import figure, plot, title, xlabel, ylabel, show, legend
 
 
-X = binary_heart_data.to_numpy()[:,0:-1]
-y2 = binary_heart_data.to_numpy()[:,-1]
+# X = binary_heart_data.to_numpy()[:,0:-1]
+# y2 = binary_heart_data.to_numpy()[:,-1]
+X = binary_heart_data.to_numpy()
+y2 = binary_heart_data.to_numpy()[:,4]
 
 # Compute values of N, M and C.
 N = len(y)
@@ -68,7 +70,7 @@ Z = Y @ V
 # Compute variance explained by principal components
 rho = (S*S) / (S*S).sum() 
 
-print('First 6 PC:',np.round(np.sum(rho[0:6])*100,1),'%')
+print('First 3 PC:',np.round(np.sum(rho[0:3])*100,1),'%')
 
 threshold = 0.9
 
@@ -86,11 +88,11 @@ plt.show()
 
 
 attributeNames = list(binary_heart_data.columns)[:-1]
-classNames = ['Disease','No disease'] # Maybe flipped?
+classNames = ['Beep','Boop'] # Maybe flipped?
 
 # Indices of the principal components to be plotted
-i = 0
-j = 1
+i = 2
+j = 4
 
 # Plot PCA of the data
 f = figure()
@@ -110,7 +112,7 @@ show()
 
 # We saw in 2.1.3 that the first 3 components explaiend more than 90
 # percent of the variance. Let's look at their coefficients:
-pcs = [0,1,2,3,4,5]
+pcs = [0,1,2]
 legendStrs = ['PC'+str(e+1) for e in pcs]
 c = ['r','g','b']
 bw = .2
