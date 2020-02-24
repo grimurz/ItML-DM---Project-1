@@ -66,10 +66,6 @@ for comp in explained_variance:
     print(val,"%")
    
 
-
-# y = binary_heart_data.to_numpy()[:,-1]
-
-
 #Now we can transform this data to its principal components
 
 
@@ -168,9 +164,9 @@ sns.heatmap(df_comp,cmap='plasma',)
 fi = plt.figure(figsize=(10,5),dpi=300)
 ax = fi.add_subplot(111, projection='3d')
 
-xi =binary_heart_data.obesity
-yi =binary_heart_data.tobacco
-zi =binary_heart_data.alcohol
+xi = binary_heart_data.obesity
+yi = binary_heart_data.tobacco
+zi = binary_heart_data.alcohol
 
 ax.scatter(xi,yi,zi, c=binary_heart_data.sbp, marker='o', alpha=.5,sizes=(10, 40))
 ax.set_title('Original data color coded for systolic blood pressure')
@@ -192,7 +188,6 @@ ax.set_zlabel('Alcohol use')
 
 
 # Plot variance explained
-
 plt.figure(dpi=300)
 plt.plot(range(1,len(rho)+1),rho,'x-')
 plt.plot(range(1,len(rho)+1),np.cumsum(rho),'o-')
@@ -206,7 +201,7 @@ plt.show()
 
 
 attributeNames = list(binary_heart_data.columns)[:-1]
-classNames = ['Beep','Boop'] 
+classNames = ['Absent','Present'] 
 
 # Indices of the principal components to be plotted
 
@@ -214,9 +209,8 @@ i = 2
 j = 4
 
 # Plot PCA of the data
-
 f = figure(dpi=300)
-title('NanoNose data: PCA')
+title('Family history')
 #Z = array(Z)
 for c in range(C):
     # select indices belonging to class c:
@@ -225,15 +219,11 @@ for c in range(C):
 legend(classNames)
 xlabel('PC{0}'.format(i+1))
 ylabel('PC{0}'.format(j+1))
-
-# Output result to screen
-
 show()
 
 
 # We saw in 2.1.3 that the first 3 components explaiend more than 90
 # percent of the variance. Let's look at their coefficients:
-
 pcs = [0,1,2]
 legendStrs = ['PC'+str(e+1) for e in pcs]
 c = ['r','g','b']
@@ -246,7 +236,7 @@ plt.xlabel('Attributes')
 plt.ylabel('Component coefficients')
 plt.legend(legendStrs)
 plt.grid()
-plt.title('NanoNose: PCA Component Coefficients')
+plt.title('PCA Component Coefficients')
 plt.show()
 
 r = np.arange(1,X.shape[1]+1)
@@ -254,17 +244,5 @@ plt.bar(r, np.std(X,0))
 plt.xticks(r, attributeNames)
 plt.ylabel('Standard deviation')
 plt.xlabel('Attributes')
-plt.title('NanoNose: attribute standard deviations')
-
-
-
-
+plt.title('Attribute standard deviations')
 plt.show()
-
-
-
-
-
-
-
-
