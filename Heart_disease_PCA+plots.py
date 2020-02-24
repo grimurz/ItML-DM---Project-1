@@ -74,7 +74,7 @@ for comp in explained_variance:
 x_pca = pca.transform(scaled_data)
 #We can know feed the x_pca into a classification algorithm
 
-
+binary_heart_data.to_excel('binary_heart_data.xlsx')
 
 #----------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------
@@ -131,10 +131,6 @@ threshold = 0.9
 
 plt.figure(figsize=(8,6),dpi=300)
 plt.scatter(x_pca[:,2],x_pca[:,4],c=binary_heart_data.famhist,cmap='plasma')
-# calc the trendline
-z = np.polyfit(x_pca[:,2], x_pca[:,4], 1)
-p = np.poly1d(z)
-pylab.plot(x_pca[:,2],p(x_pca[:,2]),"r")
 plt.title('Family history')
 plt.xlabel('Third principal component')
 plt.ylabel('Fifth Principal Component')
