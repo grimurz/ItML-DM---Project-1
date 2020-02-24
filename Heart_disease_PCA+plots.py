@@ -55,7 +55,7 @@ scaled_data = scaler.transform(binary_heart_data)
 #We conduct the PCA analysis
 
 
-pca = PCA(n_components=5)
+pca = PCA(n_components=10)
 pca.fit(scaled_data)
 explained_variance = pca.explained_variance_ratio_
 print("Each component contributes in attribute variance by, \nthe 1st:",round(explained_variance[0],2)*100,"%\nthe 2nd:",round(explained_variance[1],2)*100,"%\nthe 3rd:",round(explained_variance[2],2)*100,"%\nthe 4th:",round(explained_variance[3],2)*100,"%\nthe 5th:",round(explained_variance[4],2)*100,"%")
@@ -226,7 +226,7 @@ show()
 
 # We saw in 2.1.3 that the first 3 components explaiend more than 90
 # percent of the variance. Let's look at their coefficients:
-pcs = [0,1,2]
+pcs = [0,1,2,3,4]
 legendStrs = ['PC'+str(e+1) for e in pcs]
 c = ['r','g','b']
 bw = .2
@@ -236,7 +236,8 @@ for i in pcs:
 plt.xticks(r+bw, attributeNames)
 plt.xlabel('Attributes')
 plt.ylabel('Component coefficients')
-plt.legend(legendStrs)
+plt.legend(legendStrs, loc=4)
+plt.xticks(rotation=45)
 plt.grid()
 plt.title('PCA Component Coefficients')
 plt.show()
@@ -247,4 +248,5 @@ plt.xticks(r, attributeNames)
 plt.ylabel('Standard deviation')
 plt.xlabel('Attributes')
 plt.title('Attribute standard deviations')
+plt.xticks(rotation=45)
 plt.show()

@@ -44,6 +44,9 @@ plt.xlabel(outcomes)
 plt.title("Likelihood of CHD if family history present" )
 plt.show()
 print("The probability of CHD if family history is present is:", (dp_count/len(chd_positive))*100,"%")
+
+
+
 for num, att in enumerate(attributeNames):
     plt.hist(X[:,num], bins='auto') 
     plt.title("Distribution of "+str(att), fontsize=18)
