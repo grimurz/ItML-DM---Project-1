@@ -36,13 +36,18 @@ X = binary_heart_data.to_numpy()
 
 mean_X = np.round(np.mean(X,0),3)
 std_X = np.round(np.std(X,0),3)
+max_X = np.round(X.max(0),3)
+min_X = np.round(X.min(0),3)
 median_X = np.round(np.median(X,0),3)
 range_X = np.round(X.max(0) - X.min(0),3)
 
-plt.hist(family_hist.values)
-plt.xlabel(outcomes)
+# plt.hist(family_hist.values)
+# plt.xlabel(outcomes)
+# plt.plot(outcomefamily_histst.values)
+plt.barh(outcomes, family_hist, align='center', alpha=0.5)
 plt.title("Likelihood of CHD if family history present" )
 plt.show()
+
 print("The probability of CHD if family history is present is:", (dp_count/len(chd_positive))*100,"%")
 
 
@@ -52,9 +57,7 @@ for num, att in enumerate(attributeNames):
     plt.title("Distribution of "+str(att), fontsize=18)
     plt.show()
 
-    
-    # axs[num][num].hist(X[:,num], bins='auto')
-    # axs[num].title("Distribution of "+str(att))
+
     
 plt.figure(figsize=(8,6),dpi=300)
 plt.scatter(heart_data.ldl,heart_data.typea,c=binary_heart_data.chd, cmap='plasma', alpha=.7, sizes=(10, 70))
@@ -92,6 +95,7 @@ plt.scatter(heart_data.age,heart_data.adiposity,c=binary_heart_data.chd, cmap='p
 z = np.polyfit(heart_data.age, heart_data.adiposity, 1)
 p = np.poly1d(z)
 pylab.plot(heart_data.age,p(heart_data.age),"r")
+
 
 plt.title('Age/Adiposity correlation color-coded for Coronary Heart Disease')
 plt.xlabel('Age')
