@@ -24,12 +24,11 @@ median_X = np.round(np.median(X,0),3)
 range_X = np.round(X.max(0) - X.min(0),3)
 
 
-# fig, axs = plt.subplots(2, 5, sharey=True, tight_layout=True)
-
 for num, att in enumerate(attributeNames):
     plt.hist(X[:,num], bins='auto') 
-    plt.title("Distribution of "+str(att))
+    plt.title("Distribution of "+str(att), fontsize=18)
     plt.show()
+<<<<<<< HEAD
     
     # axs[num][num].hist(X[:,num], bins='auto')
     # axs[num].title("Distribution of "+str(att))
@@ -73,3 +72,5 @@ pylab.plot(heart_data.age,p(heart_data.age),"r")
 plt.title('Age/Adiposity correlation color-coded for Coronary Heart Disease')
 plt.xlabel('Age')
 plt.ylabel('Adiposity')
+=======
+>>>>>>> master
