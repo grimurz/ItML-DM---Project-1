@@ -21,6 +21,8 @@ import seaborn as sns
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import pylab
+from pylab import *
 
 
 #Reading the dataset data and start of the pre-processing 
@@ -133,6 +135,10 @@ threshold = 0.9
 
 plt.figure(figsize=(8,6),dpi=300)
 plt.scatter(x_pca[:,2],x_pca[:,4],c=binary_heart_data.famhist,cmap='plasma')
+# calc the trendline
+z = np.polyfit(x_pca[:,2], x_pca[:,4], 1)
+p = np.poly1d(z)
+pylab.plot(x_pca[:,2],p(x_pca[:,2]),"r")
 plt.title('Family history')
 plt.xlabel('Third principal component')
 plt.ylabel('Fifth Principal Component')
