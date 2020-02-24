@@ -232,7 +232,7 @@ c = ['r','g','b']
 bw = .2
 r = np.arange(1,M+1)
 for i in pcs:    
-    plt.bar(r+i*bw, V[:,i], width=bw)
+    plt.bar(r+i*bw, V[:,i], width=bw/2)
 plt.xticks(r+bw, attributeNames)
 plt.xlabel('Attributes')
 plt.ylabel('Component coefficients')
