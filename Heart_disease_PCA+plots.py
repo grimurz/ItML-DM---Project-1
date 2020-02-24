@@ -240,7 +240,11 @@ for i in pcs:
 plt.xticks(r+bw, attributeNames)
 plt.xlabel('Attributes')
 plt.ylabel('Component coefficients')
+<<<<<<< Updated upstream
 plt.legend(legendStrs, loc=4)
+=======
+plt.legend(legendStrs)
+>>>>>>> Stashed changes
 plt.xticks(rotation=45)
 plt.grid()
 plt.title('PCA Component Coefficients')
