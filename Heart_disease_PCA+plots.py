@@ -119,6 +119,10 @@ rho = (S*S) / (S*S).sum()
 threshold = 0.9
 
 
+# correlation test
+corr_test = np.corrcoef(X)
+
+
 #----------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------
 
@@ -202,7 +206,7 @@ plt.grid()
 plt.show()
 
 
-attributeNames = list(binary_heart_data.columns)[:-1]
+attributeNames = list(binary_heart_data.columns)
 classNames = ['Absent','Present'] 
 
 # Indices of the principal components to be plotted
@@ -228,7 +232,7 @@ show()
 # percent of the variance. Let's look at their coefficients:
 pcs = [0,1,2,3,4]
 legendStrs = ['PC'+str(e+1) for e in pcs]
-c = ['r','g','b']
+# c = ['r','g','b']
 bw = .2
 r = np.arange(1,M+1)
 for i in pcs:    
@@ -236,7 +240,11 @@ for i in pcs:
 plt.xticks(r+bw, attributeNames)
 plt.xlabel('Attributes')
 plt.ylabel('Component coefficients')
+
 plt.legend(legendStrs, loc=4)
+
+plt.legend(legendStrs)
+
 plt.xticks(rotation=45)
 plt.grid()
 plt.title('PCA Component Coefficients')
@@ -245,6 +253,7 @@ plt.show()
 r = np.arange(1,X.shape[1]+1)
 plt.bar(r, np.std(X,0))
 plt.xticks(r, attributeNames)
+plt.xticks(rotation=45)
 plt.ylabel('Standard deviation')
 plt.xlabel('Attributes')
 plt.title('Attribute standard deviations')
