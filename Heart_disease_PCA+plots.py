@@ -295,6 +295,8 @@ X = binary_heart_data.to_numpy()
 
 mean_X = np.round(np.mean(X,0),3)
 std_X = np.round(np.std(X,0),3)
+max_X = np.round(X.max(0),3)
+min_X = np.round(X.min(0),3)
 median_X = np.round(np.median(X,0),3)
 range_X = np.round(X.max(0) - X.min(0),3)
 
