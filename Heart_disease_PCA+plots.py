@@ -22,7 +22,9 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import pylab
+from matplotlib.pyplot import (figure, title, boxplot, xticks, subplot, hist, xlabel, ylim, yticks, show)
 from pylab import *
+from scipy.stats import zscore
 
 
 #Reading the dataset data and start of the pre-processing 
@@ -321,10 +323,6 @@ plt.xticks(fontsize=12)
 plt.show()
 
 
-
-
-
-
 attributeNames = list(binary_heart_data.columns)
 
 X = binary_heart_data.to_numpy()
@@ -336,11 +334,27 @@ min_X = np.round(X.min(0),3)
 median_X = np.round(np.median(X,0),3)
 range_X = np.round(X.max(0) - X.min(0),3)
 
-
 print("The probability of CHD if family history is present is:", (dp_count/len(chd_positive))*100,"%")
 
 
+nonbinary_heart_data = binary_heart_data.drop(['famhist','chd'], axis=1).to_numpy()
+nonbinary_heart_attr = list(binary_heart_data.drop(['famhist','chd'], axis=1).columns)
 
+figure()
+title('CHD: Boxplot')
+boxplot(nonbinary_heart_data)
+M = nonbinary_heart_data.shape[1]
+xticks(range(1,M+1), nonbinary_heart_attr, rotation=45)
+
+
+# figure(figsize=(12,6))
+figure()
+title('CHD: Boxplot (standarized)')
+boxplot(zscore(nonbinary_heart_data, ddof=1), nonbinary_heart_attr)
+xticks(range(1,M+1), nonbinary_heart_attr, rotation=45)
+
+
+figure()
 for num, att in enumerate(attributeNames):
     plt.hist(X[:,num], bins='auto') 
     plt.title("Distribution of "+str(att), fontsize=18)
