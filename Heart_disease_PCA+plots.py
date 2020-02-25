@@ -22,7 +22,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import pylab
-from matplotlib.pyplot import (figure, title, boxplot, xticks, subplot, hist, xlabel, ylim, yticks, show)
+from matplotlib.pyplot import (figure, title, boxplot, xticks, subplot, hist, xlabel, ylim, yticks, show, grid)
 from pylab import *
 from scipy.stats import zscore
 
@@ -340,18 +340,27 @@ print("The probability of CHD if family history is present is:", (dp_count/len(c
 nonbinary_heart_data = binary_heart_data.drop(['famhist','chd'], axis=1).to_numpy()
 nonbinary_heart_attr = list(binary_heart_data.drop(['famhist','chd'], axis=1).columns)
 
-figure()
-title('CHD: Boxplot')
-boxplot(nonbinary_heart_data)
+# boxprops = dict(linewidth=3)
+
+figure(figsize=(20,10))
+# figure()
+subplot(1,2,1)
+title('CHD: Boxplot', fontsize=18)
+boxplot(nonbinary_heart_data, 0, 'rx')
+grid(True, linestyle='-', which='major', color='lightgrey', alpha=0.5)
 M = nonbinary_heart_data.shape[1]
-xticks(range(1,M+1), nonbinary_heart_attr, rotation=45)
+xticks(range(1,M+1), nonbinary_heart_attr, rotation=45, fontsize=16)
+yticks(fontsize=16)
 
 
-# figure(figsize=(12,6))
-figure()
-title('CHD: Boxplot (standarized)')
-boxplot(zscore(nonbinary_heart_data, ddof=1), nonbinary_heart_attr)
-xticks(range(1,M+1), nonbinary_heart_attr, rotation=45)
+# figure(figsize=(8,8))
+# figure()
+subplot(1,2,2)
+title('CHD: Boxplot (standarized)', fontsize=18)
+boxplot(zscore(nonbinary_heart_data, ddof=1), nonbinary_heart_attr, 'rx')
+grid(True, linestyle='-', which='major', color='lightgrey', alpha=0.5)
+xticks(range(1,M+1), nonbinary_heart_attr, rotation=45, fontsize=16)
+yticks(fontsize=16)
 
 
 figure()
