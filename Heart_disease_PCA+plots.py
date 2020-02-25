@@ -166,21 +166,31 @@ df_comp = pd.DataFrame(pca.components_,columns=binary_heart_data.columns)
 plt.figure(figsize=(12,6),dpi=300)
 sns.heatmap(df_comp,cmap='plasma',)
 
+#3d scatter of the original data
 
 fi = plt.figure(figsize=(10,5),dpi=300)
 ax = fi.add_subplot(111, projection='3d')
-
 xi = binary_heart_data.obesity
 yi = binary_heart_data.tobacco
 zi = binary_heart_data.alcohol
-
-ax.scatter(xi,yi,zi, c=binary_heart_data.sbp, marker='o', alpha=.5,sizes=(10, 40))
+ax.scatter(xi,yi,zi, c=binary_heart_data.sbp,cmap='plasma', marker='o', alpha=.5,sizes=(10, 40))
 ax.set_title('Original data color coded for systolic blood pressure')
 ax.set_xlabel('Obesity')
 ax.set_ylabel('Tobacco use')
 ax.set_zlabel('Alcohol use')
 
+#3d scatter of the first 3 PCAs
 
+fz = plt.figure(figsize=(10,5),dpi=300)
+ax = fz.add_subplot(111, projection='3d')
+xz = x_pca[:,2]
+yz = x_pca[:,3]
+zz = x_pca[:,4]
+ax.scatter(xz,yz,zz, c=binary_heart_data.famhist,cmap='seismic', marker='o', alpha=.5,sizes=(10, 40))
+ax.set_title('3d PCA representation')
+ax.set_xlabel('1st PC')
+ax.set_ylabel('2nd PC')
+ax.set_zlabel('3rd PC')
 
 
 #----------------------------------------------------------------------------------------------------
@@ -259,6 +269,14 @@ plt.xlabel('Attributes')
 plt.title('Attribute standard deviations')
 plt.xticks(rotation=45)
 plt.show()
+
+
+
+
+
+
+
+
 
 
 
@@ -355,3 +373,28 @@ plt.ylabel('Adiposity')
 
 
 
+sns.set(style="white")
+
+
+d = pd.DataFrame(data=binary_heart_data,
+                 columns=list(binary_heart_data.columns))
+
+# Compute the correlation matrix
+corr = d.corr()
+
+# Generate a mask for the upper triangle
+mask = np.triu(np.ones_like(corr, dtype=np.bool))
+
+# Set up the matplotlib figure
+f, ax = plt.subplots(figsize=(11, 9),dpi=300)
+
+
+plt.suptitle('Correlation of attributes in the original data', fontsize=20)
+#ax.set_title('Correlation of the attributes in the orginal data')
+
+# Generate a custom diverging colormap
+cmap = sns.diverging_palette(220, 10, as_cmap=True)
+
+# Draw the heatmap with the mask and correct aspect ratio
+sea =sns.heatmap(corr, mask=mask, cmap=cmap, vmax=.4, center=0,
+            square=True, linewidths=.5, cbar_kws={"shrink": .5})
