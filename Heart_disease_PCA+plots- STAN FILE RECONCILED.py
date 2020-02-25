@@ -258,9 +258,10 @@ plt.legend(legendStrs,loc=4,ncol=3,fontsize='xx-small', bbox_to_anchor=(1, 0))
 
 #plt.legend(legendStrs)
 
-plt.xticks(rotation=45)
+plt.xticks(rotation=22)
 plt.grid()
 plt.title('PCA Component Coefficients')
+plt.savefig('PCA Component Coefficients.png', dpi = 300)
 plt.show()
 plt.savefig('PCA Component Coefficients.png', dpi = 300)
 r = np.arange(1,X.shape[1]+1)

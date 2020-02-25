@@ -246,20 +246,21 @@ pcs = [0,1,2,3,4]
 legendStrs = ['PC'+str(e+1) for e in pcs]
 # c = ['r','g','b']
 bw = .2
+space=3*bw
 r = np.arange(1,M+1)
 for i in pcs:    
-    plt.bar(r+i*bw, V[:,i], width=bw*4/5)
-plt.xticks(r+bw, attributeNames)
+    plt.bar(r+r*5*bw+space+i*bw, V[:,i], width=bw)
+plt.xticks(r+r*5*bw+space, attributeNames)
 plt.xlabel('Attributes')
 plt.ylabel('Component coefficients')
 
-plt.legend(legendStrs, loc=4)
+plt.legend(legendStrs,loc=4,ncol=3,fontsize='xx-small', bbox_to_anchor=(1, 0))
 
+#plt.legend(legendStrs)
 
 plt.xticks(rotation=22)
 plt.grid()
 plt.title('PCA Component Coefficients')
-
 plt.savefig('PCA Component Coefficients.png', dpi = 300)
 plt.show()
 
@@ -342,14 +343,14 @@ nonbinary_heart_attr = list(binary_heart_data.drop(['famhist','chd'], axis=1).co
 
 # boxprops = dict(linewidth=3)
 
-figure(figsize=(20,10))
+figure(figsize=(20,10),dpi=300)
 # figure()
 subplot(1,2,1)
 title('CHD: Boxplot', fontsize=18)
 boxplot(nonbinary_heart_data, 0, 'rx')
 grid(True, linestyle='-', which='major', color='lightgrey', alpha=0.5)
 M = nonbinary_heart_data.shape[1]
-xticks(range(1,M+1), nonbinary_heart_attr, rotation=45, fontsize=16)
+xticks(range(1,M+1), nonbinary_heart_attr, rotation=25, fontsize=16)
 yticks(fontsize=16)
 
 
@@ -359,11 +360,11 @@ subplot(1,2,2)
 title('CHD: Boxplot (standarized)', fontsize=18)
 boxplot(zscore(nonbinary_heart_data, ddof=1), nonbinary_heart_attr, 'rx')
 grid(True, linestyle='-', which='major', color='lightgrey', alpha=0.5)
-xticks(range(1,M+1), nonbinary_heart_attr, rotation=45, fontsize=16)
+xticks(range(1,M+1), nonbinary_heart_attr, rotation=25, fontsize=16)
 yticks(fontsize=16)
 
 
-figure()
+figure(dpi=300)
 for num, att in enumerate(attributeNames):
     plt.hist(X[:,num], bins='auto') 
     plt.title("Distribution of "+str(att), fontsize=18)
