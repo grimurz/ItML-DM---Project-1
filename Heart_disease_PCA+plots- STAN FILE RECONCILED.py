@@ -262,7 +262,7 @@ plt.xticks(rotation=45)
 plt.grid()
 plt.title('PCA Component Coefficients')
 plt.show()
-
+plt.savefig('PCA Component Coefficients.png', dpi = 300)
 r = np.arange(1,X.shape[1]+1)
 plt.bar(r, np.std(X,0))
 plt.xticks(r, attributeNames)
