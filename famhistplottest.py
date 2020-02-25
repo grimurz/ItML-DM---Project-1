@@ -21,7 +21,8 @@ import seaborn as sns
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from mpl_toolkits.mplot3d import Axes3D
-from matplotlib import pylab
+from matplotlib.pyplot import (figure, title, boxplot, xticks, subplot, hist,
+                               xlabel, ylim, yticks, show)
 from pylab import *
 
 
@@ -133,132 +134,132 @@ corr_test = np.corrcoef(X)
 
 
 
-plt.figure(figsize=(8,6),dpi=300)
-plt.scatter(x_pca[:,2],x_pca[:,4],c=binary_heart_data.famhist,cmap='plasma')
-plt.title('Family history')
-plt.xlabel('Third principal component')
-plt.ylabel('Fifth Principal Component')
+# plt.figure(figsize=(8,6),dpi=300)
+# plt.scatter(x_pca[:,2],x_pca[:,4],c=binary_heart_data.famhist,cmap='plasma')
+# plt.title('Family history')
+# plt.xlabel('Third principal component')
+# plt.ylabel('Fifth Principal Component')
 
-plt.figure(figsize=(8,6),dpi=300)
-plt.scatter(x_pca[:,2],x_pca[:,4],c=binary_heart_data.famhist,cmap=sns.cubehelix_palette(start=0,rot=-.2,light=.75,dark=.30, as_cmap=True),alpha=.7,sizes=(10, 70))
-plt.title('Family history')
-plt.xlabel('Third principal component')
-plt.ylabel('Fifth Principal Component')
-
-
-plt.figure(figsize=(8,6),dpi=300)
-plt.scatter(x_pca[:,0],x_pca[:,2],c=binary_heart_data.chd,cmap='plasma')
-plt.title('Coronary heart disease')
-plt.xlabel('First principal component')
-plt.ylabel('Third Principal Component')
-
-plt.figure(figsize=(8,6),dpi=300)
-plt.scatter(x_pca[:,0],x_pca[:,2],c=binary_heart_data.chd,cmap=sns.cubehelix_palette(start=2,rot=-.2,light=.75,dark=.30, as_cmap=True),alpha=.7,sizes=(10, 70))
-plt.title('Coronary heart disease')
-plt.xlabel('First principal component')
-plt.ylabel('Third Principal Component')
-
-#This heatmap and the color bar basically represent the correlation between the various feature 
-#and the principal component itself.
+# plt.figure(figsize=(8,6),dpi=300)
+# plt.scatter(x_pca[:,2],x_pca[:,4],c=binary_heart_data.famhist,cmap=sns.cubehelix_palette(start=0,rot=-.2,light=.75,dark=.30, as_cmap=True),alpha=.7,sizes=(10, 70))
+# plt.title('Family history')
+# plt.xlabel('Third principal component')
+# plt.ylabel('Fifth Principal Component')
 
 
-df_comp = pd.DataFrame(pca.components_,columns=binary_heart_data.columns)
-plt.figure(figsize=(12,6),dpi=300)
-sns.heatmap(df_comp,cmap='plasma',)
+# plt.figure(figsize=(8,6),dpi=300)
+# plt.scatter(x_pca[:,0],x_pca[:,2],c=binary_heart_data.chd,cmap='plasma')
+# plt.title('Coronary heart disease')
+# plt.xlabel('First principal component')
+# plt.ylabel('Third Principal Component')
+
+# plt.figure(figsize=(8,6),dpi=300)
+# plt.scatter(x_pca[:,0],x_pca[:,2],c=binary_heart_data.chd,cmap=sns.cubehelix_palette(start=2,rot=-.2,light=.75,dark=.30, as_cmap=True),alpha=.7,sizes=(10, 70))
+# plt.title('Coronary heart disease')
+# plt.xlabel('First principal component')
+# plt.ylabel('Third Principal Component')
+
+# #This heatmap and the color bar basically represent the correlation between the various feature 
+# #and the principal component itself.
 
 
-fi = plt.figure(figsize=(10,5),dpi=300)
-ax = fi.add_subplot(111, projection='3d')
-
-xi = binary_heart_data.obesity
-yi = binary_heart_data.tobacco
-zi = binary_heart_data.alcohol
-
-ax.scatter(xi,yi,zi, c=binary_heart_data.sbp, marker='o', alpha=.5,sizes=(10, 40))
-ax.set_title('Original data color coded for systolic blood pressure')
-ax.set_xlabel('Obesity')
-ax.set_ylabel('Tobacco use')
-ax.set_zlabel('Alcohol use')
+# df_comp = pd.DataFrame(pca.components_,columns=binary_heart_data.columns)
+# plt.figure(figsize=(12,6),dpi=300)
+# sns.heatmap(df_comp,cmap='plasma',)
 
 
+# fi = plt.figure(figsize=(10,5),dpi=300)
+# ax = fi.add_subplot(111, projection='3d')
 
+# xi = binary_heart_data.obesity
+# yi = binary_heart_data.tobacco
+# zi = binary_heart_data.alcohol
 
-#----------------------------------------------------------------------------------------------------
-#----------------------------------------------------------------------------------------------------
-
-#PLOTTING
-
-
-#Second approach
+# ax.scatter(xi,yi,zi, c=binary_heart_data.sbp, marker='o', alpha=.5,sizes=(10, 40))
+# ax.set_title('Original data color coded for systolic blood pressure')
+# ax.set_xlabel('Obesity')
+# ax.set_ylabel('Tobacco use')
+# ax.set_zlabel('Alcohol use')
 
 
 
-# Plot variance explained
-plt.figure(dpi=300)
-plt.plot(range(1,len(rho)+1),rho,'x-')
-plt.plot(range(1,len(rho)+1),np.cumsum(rho),'o-')
-plt.plot([1,len(rho)],[threshold, threshold],'k--')
-plt.title('Variance explained by principal components');
-plt.xlabel('Principal component');
-plt.ylabel('Variance explained');
-plt.legend(['Individual','Cumulative','Threshold'])
-plt.grid()
-plt.show()
+
+# #----------------------------------------------------------------------------------------------------
+# #----------------------------------------------------------------------------------------------------
+
+# #PLOTTING
 
 
-attributeNames = list(binary_heart_data.columns)
-classNames = ['Absent','Present'] 
-
-# Indices of the principal components to be plotted
-
-i = 2
-j = 4
-
-# Plot PCA of the data
-f = figure(dpi=300)
-title('Family history')
-#Z = array(Z)
-for c in range(C):
-    # select indices belonging to class c:
-    class_mask = y==c
-    plot(Z[class_mask,i], Z[class_mask,j], 'o', alpha=.5)
-legend(classNames)
-xlabel('PC{0}'.format(i+1))
-ylabel('PC{0}'.format(j+1))
-show()
+# #Second approach
 
 
-# We saw in 2.1.3 that the first 3 components explaiend more than 90
-# percent of the variance. Let's look at their coefficients:
-pcs = [0,1,2,3,4]
-legendStrs = ['PC'+str(e+1) for e in pcs]
-# c = ['r','g','b']
-bw = .2
-r = np.arange(1,M+1)
-for i in pcs:    
-    plt.bar(r+i*bw, V[:,i], width=bw/2)
-plt.xticks(r+bw, attributeNames)
-plt.xlabel('Attributes')
-plt.ylabel('Component coefficients')
 
-plt.legend(legendStrs, loc=4)
+# # Plot variance explained
+# plt.figure(dpi=300)
+# plt.plot(range(1,len(rho)+1),rho,'x-')
+# plt.plot(range(1,len(rho)+1),np.cumsum(rho),'o-')
+# plt.plot([1,len(rho)],[threshold, threshold],'k--')
+# plt.title('Variance explained by principal components');
+# plt.xlabel('Principal component');
+# plt.ylabel('Variance explained');
+# plt.legend(['Individual','Cumulative','Threshold'])
+# plt.grid()
+# plt.show()
 
-plt.legend(legendStrs)
 
-plt.xticks(rotation=45)
-plt.grid()
-plt.title('PCA Component Coefficients')
-plt.show()
+# attributeNames = list(binary_heart_data.columns)
+# classNames = ['Absent','Present'] 
 
-r = np.arange(1,X.shape[1]+1)
-plt.bar(r, np.std(X,0))
-plt.xticks(r, attributeNames)
-plt.xticks(rotation=45)
-plt.ylabel('Standard deviation')
-plt.xlabel('Attributes')
-plt.title('Attribute standard deviations')
-plt.xticks(rotation=45)
-plt.show()
+# # Indices of the principal components to be plotted
+
+# i = 2
+# j = 4
+
+# # Plot PCA of the data
+# f = figure(dpi=300)
+# title('Family history')
+# #Z = array(Z)
+# for c in range(C):
+#     # select indices belonging to class c:
+#     class_mask = y==c
+#     plot(Z[class_mask,i], Z[class_mask,j], 'o', alpha=.5)
+# legend(classNames)
+# xlabel('PC{0}'.format(i+1))
+# ylabel('PC{0}'.format(j+1))
+# show()
+
+
+# # We saw in 2.1.3 that the first 3 components explaiend more than 90
+# # percent of the variance. Let's look at their coefficients:
+# pcs = [0,1,2,3,4]
+# legendStrs = ['PC'+str(e+1) for e in pcs]
+# # c = ['r','g','b']
+# bw = .2
+# r = np.arange(1,M+1)
+# for i in pcs:    
+#     plt.bar(r+i*bw, V[:,i], width=bw/2)
+# plt.xticks(r+bw, attributeNames)
+# plt.xlabel('Attributes')
+# plt.ylabel('Component coefficients')
+
+# plt.legend(legendStrs, loc=4)
+
+# plt.legend(legendStrs)
+
+# plt.xticks(rotation=45)
+# plt.grid()
+# plt.title('PCA Component Coefficients')
+# plt.show()
+
+# r = np.arange(1,X.shape[1]+1)
+# plt.bar(r, np.std(X,0))
+# plt.xticks(r, attributeNames)
+# plt.xticks(rotation=45)
+# plt.ylabel('Standard deviation')
+# plt.xlabel('Attributes')
+# plt.title('Attribute standard deviations')
+# plt.xticks(rotation=45)
+# plt.show()
 
 
 
@@ -305,10 +306,10 @@ print("The probability of CHD if family history is present is:", (dp_count/len(c
 
 
 
-for num, att in enumerate(attributeNames):
-    plt.hist(X[:,num], bins='auto') 
-    plt.title("Distribution of "+str(att), fontsize=18)
-    plt.show()
+# for num, att in enumerate(attributeNames):
+#     plt.hist(X[:,num], bins='auto') 
+#     plt.title("Distribution of "+str(att), fontsize=18)
+#     plt.show()
 
 
 
@@ -325,41 +326,58 @@ plt.show()
 
 
     
-plt.figure(figsize=(8,6),dpi=300)
-plt.scatter(heart_data.ldl,heart_data.typea,c=binary_heart_data.chd, cmap='plasma', alpha=.7, sizes=(10, 70))
-plt.title('LDL/Type A correlation color-coded for Coronary Heart Disease')
-plt.xlabel('LDL')
-plt.ylabel('Type A')
+# plt.figure(figsize=(8,6),dpi=300)
+# plt.scatter(heart_data.ldl,heart_data.typea,c=binary_heart_data.chd, cmap='plasma', alpha=.7, sizes=(10, 70))
+# plt.title('LDL/Type A correlation color-coded for Coronary Heart Disease')
+# plt.xlabel('LDL')
+# plt.ylabel('Type A')
 
 
     
-plt.figure(figsize=(8,6),dpi=300)
-plt.scatter(heart_data.age,heart_data.obesity,c=binary_heart_data.chd, cmap='plasma',alpha=.7, sizes=(10, 70))
-# calc the trendline
-z = np.polyfit(heart_data.age, heart_data.obesity, 1)
-p = np.poly1d(z)
-pylab.plot(heart_data.age,p(heart_data.age),"r")
-plt.title('Age/Obesity correlation color-coded for Coronary Heart Disease')
-plt.xlabel('Age')
-plt.ylabel('Obesity')
+# plt.figure(figsize=(8,6),dpi=300)
+# plt.scatter(heart_data.age,heart_data.obesity,c=binary_heart_data.chd, cmap='plasma',alpha=.7, sizes=(10, 70))
+# # calc the trendline
+# z = np.polyfit(heart_data.age, heart_data.obesity, 1)
+# p = np.poly1d(z)
+# pylab.plot(heart_data.age,p(heart_data.age),"r")
+# plt.title('Age/Obesity correlation color-coded for Coronary Heart Disease')
+# plt.xlabel('Age')
+# plt.ylabel('Obesity')
 
-plt.figure(figsize=(8,6),dpi=300)
-plt.scatter(heart_data.age,heart_data.typea,c=binary_heart_data.chd, cmap='plasma',alpha=.7, sizes=(10, 70))
-plt.title('Age/Type A correlation color-coded for Coronary Heart Disease')
-plt.xlabel('Age')
-plt.ylabel('Type A')
-
-
-plt.figure(figsize=(8,6),dpi=300)
-plt.scatter(heart_data.age,heart_data.adiposity,c=binary_heart_data.chd, cmap='plasma',alpha=.7, sizes=(10, 70))
-# calc the trendline
-z = np.polyfit(heart_data.age, heart_data.adiposity, 1)
-p = np.poly1d(z)
-pylab.plot(heart_data.age,p(heart_data.age),"r")
-
-plt.title('Age/Adiposity correlation color-coded for Coronary Heart Disease')
-plt.xlabel('Age')
-plt.ylabel('Adiposity')
+# plt.figure(figsize=(8,6),dpi=300)
+# plt.scatter(heart_data.age,heart_data.typea,c=binary_heart_data.chd, cmap='plasma',alpha=.7, sizes=(10, 70))
+# plt.title('Age/Type A correlation color-coded for Coronary Heart Disease')
+# plt.xlabel('Age')
+# plt.ylabel('Type A')
 
 
+# plt.figure(figsize=(8,6),dpi=300)
+# plt.scatter(heart_data.age,heart_data.adiposity,c=binary_heart_data.chd, cmap='plasma',alpha=.7, sizes=(10, 70))
+# # calc the trendline
+# z = np.polyfit(heart_data.age, heart_data.adiposity, 1)
+# p = np.poly1d(z)
+# pylab.plot(heart_data.age,p(heart_data.age),"r")
 
+# plt.title('Age/Adiposity correlation color-coded for Coronary Heart Disease')
+# plt.xlabel('Age')
+# plt.ylabel('Adiposity')
+
+
+from scipy.stats import zscore
+
+
+nonbinary_heart_data = binary_heart_data.drop(['famhist','chd'], axis=1).to_numpy()
+nonbinary_heart_attr = list(binary_heart_data.drop(['famhist','chd'], axis=1).columns)
+
+figure()
+title('CHD: Boxplot')
+boxplot(nonbinary_heart_data)
+M = nonbinary_heart_data.shape[1]
+xticks(range(1,M+1), nonbinary_heart_attr, rotation=45)
+
+
+# figure(figsize=(12,6))
+figure()
+title('CHD: Boxplot (standarized)')
+boxplot(zscore(nonbinary_heart_data, ddof=1), nonbinary_heart_attr)
+xticks(range(1,M+1), nonbinary_heart_attr, rotation=45)
