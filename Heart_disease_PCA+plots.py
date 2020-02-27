@@ -47,7 +47,8 @@ y = np.array([historyDict[cl] for cl in fam_history])
 binary_heart_data= heart_data.copy()
 binary_heart_data.famhist = y
 binary_heart_data.drop('row.names', axis=1, inplace=True)
-
+heatmap_data = binary_heart_data.copy()
+binary_heart_data.drop('chd', axis=1, inplace=True)
 #Data standardization: We scale our data so that each feature has a single unit of variance.
 
 scaler = StandardScaler()
@@ -57,7 +58,7 @@ scaled_data = scaler.transform(binary_heart_data)
 #We conduct the PCA analysis
 
 
-pca = PCA(n_components=10)
+pca = PCA(n_components=9)
 pca.fit(scaled_data)
 explained_variance = pca.explained_variance_ratio_
 print("Each component contributes in attribute variance by, \nthe 1st:",round(explained_variance[0],2)*100,"%\nthe 2nd:",round(explained_variance[1],2)*100,"%\nthe 3rd:",round(explained_variance[2],2)*100,"%\nthe 4th:",round(explained_variance[3],2)*100,"%\nthe 5th:",round(explained_variance[4],2)*100,"%")
@@ -136,10 +137,10 @@ corr_test = np.corrcoef(X)
 
 classNames = ['Absent','Present'] 
 plt.figure(figsize=(8,6),dpi=300)
-plt.scatter(x_pca[:,2],x_pca[:,4],c=binary_heart_data.famhist,cmap='seismic',alpha=.5,sizes=(10, 70))
+plt.scatter(x_pca[:,2],x_pca[:,3],c=binary_heart_data.famhist,cmap='seismic',alpha=.5,sizes=(10, 70))
 plt.title('Family history', fontsize=14)
 plt.xlabel('Third principal component')
-plt.ylabel('Fifth Principal Component')
+plt.ylabel('Forth Principal Component')
 plt.legend(['Absent','Present'])
 #plt.figure(figsize=(8,6),dpi=300)
 #plt.scatter(x_pca[:,2],x_pca[:,4],c=binary_heart_data.famhist,cmap=sns.cubehelix_palette(start=0,rot=-.2,light=.75,dark=.30, as_cmap=True),alpha=.7,sizes=(10, 70))
@@ -185,14 +186,14 @@ ax.set_zlabel('Alcohol use')
 
 fz = plt.figure(figsize=(10,5),dpi=300)
 ax = fz.add_subplot(111, projection='3d')
-xz = x_pca[:,2]
+xz = x_pca[:,0]
 yz = x_pca[:,3]
 zz = x_pca[:,4]
 ax.scatter(xz,yz,zz, c=binary_heart_data.famhist,cmap='seismic', marker='o', alpha=.5,sizes=(10, 40))
 ax.set_title('3d PCA representation',fontsize=18)
-ax.set_xlabel('1st PC')
-ax.set_ylabel('2nd PC')
-ax.set_zlabel('3rd PC')
+ax.set_xlabel('3rd PC')
+ax.set_ylabel('4th PC')
+ax.set_zlabel('5th PC')
 
 
 #----------------------------------------------------------------------------------------------------
@@ -224,7 +225,7 @@ attributeNames = list(binary_heart_data.columns)
 # Indices of the principal components to be plotted
 
 i = 2
-j = 4
+j = 3
 
 # Plot PCA of the data
 f = figure(dpi=300)
@@ -294,8 +295,10 @@ plt.show()
 #Distributions - correlations
 
 
-correlation = binary_heart_data[['famhist','chd']].copy()
-chd_positive = binary_heart_data[['famhist','chd']].copy()
+corr_fam = binary_heart_data[['famhist']].copy()
+corr_chd =heart_data[['chd']].copy()
+correlation= pd.merge(corr_fam,corr_chd, left_index=True, right_index=True)
+chd_positive = correlation.copy()
 double_positive = correlation[(correlation['famhist']>0) &(correlation['chd']>0)]
 hist_positive_chd_negative = correlation[(correlation['famhist']>0) &(correlation['chd']==0)]
 hist_negative_chd_positive =correlation[(correlation['famhist']==0) &(correlation['chd']==1)]
@@ -338,8 +341,8 @@ range_X = np.round(X.max(0) - X.min(0),3)
 print("The probability of CHD if family history is present is:", (dp_count/len(chd_positive))*100,"%")
 
 
-nonbinary_heart_data = binary_heart_data.drop(['famhist','chd'], axis=1).to_numpy()
-nonbinary_heart_attr = list(binary_heart_data.drop(['famhist','chd'], axis=1).columns)
+nonbinary_heart_data = binary_heart_data.drop(['famhist'], axis=1).to_numpy()
+nonbinary_heart_attr = list(binary_heart_data.drop(['famhist'], axis=1).columns)
 
 # boxprops = dict(linewidth=3)
 
@@ -388,7 +391,7 @@ for num, att in enumerate(attributeNames):
 #plt.ylabel('CHD')
     
 plt.figure(figsize=(8,6),dpi=300)
-plt.scatter(heart_data.age,heart_data.obesity,c=binary_heart_data.chd, cmap='seismic',alpha=.7, sizes=(10, 70))
+plt.scatter(heart_data.age,heart_data.obesity,c=heart_data.chd, cmap='seismic',alpha=.7, sizes=(10, 70))
 # calc the trendline
 z = np.polyfit(heart_data.age, heart_data.obesity, 1)
 p = np.poly1d(z)
@@ -405,7 +408,7 @@ plt.ylabel('Obesity')
 
 
 plt.figure(figsize=(8,6),dpi=300)
-plt.scatter(heart_data.age,heart_data.adiposity,c=binary_heart_data.chd, cmap='seismic',alpha=.7, sizes=(10, 70))
+plt.scatter(heart_data.age,heart_data.adiposity,c=heart_data.chd, cmap='seismic',alpha=.7, sizes=(10, 70))
 # calc the trendline
 z = np.polyfit(heart_data.age, heart_data.adiposity, 1)
 p = np.poly1d(z)
@@ -420,8 +423,8 @@ plt.ylabel('Adiposity')
 sns.set(style="white")
 
 
-d = pd.DataFrame(data=binary_heart_data,
-                 columns=list(binary_heart_data.columns))
+d = pd.DataFrame(data=heatmap_data,
+                 columns=list(heatmap_data.columns))
 
 # Compute the correlation matrix
 corr = d.corr()
